@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Pact</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ff2d55;
+            font-family: 'Georgia', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(20, 20, 20, 0.9);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid #ff2d55;
+            box-shadow: 0 0 40px rgba(255, 45, 85, 0.3);
+            width: 360px;
+            z-index: 10;
+        }
+
+        h1 { font-size: 1.6rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+
+        button {
+            background: linear-gradient(45deg, #ff2d55, #800020);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        button:active { transform: scale(0.9); }
+
+        .hidden { display: none; }
+
+        /* Floating Hearts & Water */
+        .bg-element {
+            position: absolute;
+            bottom: -50px;
+            opacity: 0.5;
+            animation: float 5s linear infinite;
+        }
+
+        @keyframes float {
+            to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Particle System */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: moveOut 1s ease-out forwards;
+        }
+
+        @keyframes moveOut {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(2.5); opacity: 0; }
+        }
+
+        #contract-text {
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #ffccd5;
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid rgba(255, 45, 85, 0.3);
+            background: rgba(0,0,0,0.5);
+            font-style: italic;
+        }
+
+        .snap-text {
+            color: #FFFC00; /* Snapchat Yellow */
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 252, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <div id="step1">
+            <h1>AAGYE JANEMAN?? 🫦</h1>
+            <button onclick="nextStep(2)">hanji darling</button>
+        </div>
+
+        <div id="step2" class="hidden">
+            <h1>where's my kiss?</h1>
+            <button onclick="spawnParticles('💋', 5); nextStep(3)">mwah</button>
+        </div>
+
+        <div id="step3" class="hidden">
+            <h1>i want more...</h1>
+            <button onclick="spawnParticles('💋', 10); nextStep(4)">mwwaaaah</button>
+        </div>
+
+        <div id="step4" class="hidden">
+            <h1>i want a deep kiss baby girl<br>give daddy a deep kiss</h1>
+            <button onclick="deepKiss(); nextStep(5)">UMMMMMMMMAHHHHH 💋</button>
+        </div>
+
+        <div id="step5" class="hidden">
+            <h1>lets sign a contract</h1>
+            <button onclick="nextStep(6)">yes daddy 😘</button>
+        </div>
+
+        <div id="step6" class="hidden">
+            <h2>THE SOUL PACT</h2>
+            <div id="contract-text">
+                I, your baby girl, officially surrender my autonomy to you. 
+                I belong to my Daddy in every sense—body, mind, and soul. 
+                I promise to be yours to cherish, yours to command, and yours 
+                to adore forever. No excuses, no exits. I am your property.
+            </div>
+            <button onclick="nextStep(7)">im all yours my daddy 🥵🥵</button>
+        </div>
+
+        <div id="step7" class="hidden">
+            <h1 style="color: white;">I LOVE YOU ❤️</h1>
+            <button onclick="nextStep(8)">i love you too Daddy 🥵</button>
+        </div>
+
+        <div id="step8" class="hidden">
+            <h1 style="color: #00d4ff;">HERE'S SOMETHING FROM MY MONSTER...</h1>
+            <button onclick="waterBlast()">💦💦💦</button>
+        </div>
+
+        <div id="step9" class="hidden">
+            <h1 style="color: #00d4ff;">💦 DRENCHED 💦</h1>
+            <p>You're all mine now. <br><br> Wait, I have another gift for you...</p>
+            <h2 class="snap-text">Just send me "GIFT" message in snap chat 👻</h2>
+        </div>
+    </div>
+
+    <script>
+        // Floating Hearts Background
+        setInterval(() => {
+            const h = document.createElement('div');
+            h.classList.add('bg-element');
+            h.innerHTML = ['❤️', '🔥', '💖'][Math.floor(Math.random()*3)];
+            h.style.left = Math.random() * 100 + "vw";
+            h.style.fontSize = (Math.random() * 20 + 10) + "px";
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 5000);
+        }, 500);
+
+        function nextStep(n) {
+            document.querySelectorAll('#app > div').forEach(d => d.classList.add('hidden'));
+            document.getElementById('step' + n).classList.remove('hidden');
+        }
+
+        function spawnParticles(emoji, count) {
+            for(let i=0; i<count; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                p.innerHTML = emoji;
+                p.style.left = '50%';
+                p.style.top = '50%';
+                p.style.setProperty('--x', (Math.random() * 600 - 300) + 'px');
+                p.style.setProperty('--y', (Math.random() * 600 - 300) + 'px');
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 1000);
+            }
+        }
+
+        function deepKiss() {
+            spawnParticles('💋', 50);
+        }
+
+        function waterBlast() {
+            let shots = 0;
+            const interval = setInterval(() => {
+                spawnParticles('💦', 15);
+                shots++;
+                if(shots > 15) {
+                    clearInterval(interval);
+                    nextStep(9);
+                }
+            }, 100);
+        }
+    </script>
+</body>
+</html>
