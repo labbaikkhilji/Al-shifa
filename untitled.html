@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Alshifa ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap');
+
+        :root { --rose: #ff4d6d; --bg: #121212; --board-color: #ffcad4; --text-color: #8e5d67; }
+        
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg); overflow: hidden; font-family: 'Poppins', sans-serif; }
+
+        /* ✨ AMBIENT HEARTS */
+        .floating-heart { position: absolute; color: #ff8fa3; pointer-events: none; z-index: 1; animation: floatUp 8s linear infinite; }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+        }
+
+        #app-shell {
+            position: relative; z-index: 10; width: 340px; height: 600px;
+            background: rgba(255, 255, 255, 0.96); border-radius: 40px;
+            margin: auto; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+        }
+
+        .screen { display: none; height: 100%; padding: 30px; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-sizing: border-box; }
+        .active { display: flex; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* GAMES */
+        .game-area { height: 180px; width: 100%; position: relative; background: #fff5f7; border: 2px dashed var(--rose); border-radius: 20px; margin: 15px 0; }
+        #heart-target { font-size: 40px; position: absolute; cursor: pointer; transition: 0.1s; }
+        .star-box { font-size: 24px; margin: 20px 0; background: white; padding: 10px; border-radius: 12px; width: 90%; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+        /* PURGE TERMINAL */
+        .terminal { background: #000; color: #00ff41; font-family: 'Courier New', monospace; font-size: 11px; padding: 15px; border-radius: 15px; width: 100%; height: 160px; text-align: left; overflow-y: auto; box-sizing: border-box; border: 1px solid #333; }
+
+        /* 🌸 THE PINK MESSAGE BOARD */
+        .message-board {
+            width: 100%; height: 420px; background: var(--board-color);
+            border-radius: 25px; padding: 25px; box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
+            overflow-y: auto; border: 4px solid #ffffff; 
+            display: none; 
+        }
+
+        .final-text { 
+            font-family: 'Dancing Script', cursive; font-size: 20px; 
+            color: var(--text-color); line-height: 1.6; white-space: pre-wrap; 
+            text-align: left; 
+        }
+
+        button { background: var(--rose); color: white; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 600; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        button:active { transform: scale(0.95); }
+        input { width: 90%; padding: 12px; border-radius: 15px; border: 1px solid #ddd; margin-bottom: 10px; outline: none; }
+    </style>
+</head>
+<body>
+
+<div id="app-shell">
+    <div id="s1" class="screen active">
+        <h2 style="color: var(--rose);">Guardian v15.0</h2>
+        <div style="font-size: 50px;">🧸</div>
+        <p style="font-size: 14px; color: #666;">Ready to clear your mind, Alshifa?</p>
+        <button onclick="nav('s2')">Unlock 🔓</button>
+    </div>
+
+    <div id="s2" class="screen">
+        <h3>Memory Sync 🌟</h3>
+        <p style="font-size: 12px;">Remember the FIRST star shown!</p>
+        <div id="star-display" class="star-box"></div>
+        <div id="star-inputs" style="display:none; margin-top: 10px;"></div>
+    </div>
+
+    <div id="s3" class="screen">
+        <h3>Catch the Peace 💖</h3>
+        <div class="game-area"><div id="heart-target" onclick="catchIt()">💖</div></div>
+        <p id="score-text">Progress: 0 / 5</p>
+    </div>
+
+    <div id="s4" class="screen">
+        <h3>Worry Disposal 🗑️</h3>
+        <p style="font-size: 12px;">Type what's bothering you (commas):</p>
+        <input type="text" id="p-input" placeholder="Stress, Sadness, Noise...">
+        <button onclick="startPurge()">Delete Forever</button>
+    </div>
+
+    <div id="s5" class="screen">
+        <h3>CLEANING SYSTEM...</h3>
+        <div class="terminal" id="term-box"></div>
+    </div>
+
+    <div id="s6" class="screen">
+        <h3 id="final-title" style="color: var(--rose);">For You 🌸</h3>
+        <button id="open-btn" onclick="revealBoard()">Read My Heart</button>
+        <div id="final-board" class="message-board">
+            <div id="type-writer" class="final-text"></div>
+            <div id="closing-promise" style="display:none; margin-top: 30px; border-top: 1px solid rgba(142, 93, 103, 0.2); padding-top: 20px;">
+                <p style="font-size: 14px; font-style: italic; color: #8e5d67;">Whenever you feel low, just open this again. I am only one message away. ❤️</p>
+                <div style="font-size: 30px;">🌸 ✨ 🦋</div>
+                <p style="font-weight: 600; color: var(--rose);">You are precious! 😊</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Floating Hearts Background
+    setInterval(() => {
+        const h = document.createElement('div');
+        h.className = 'floating-heart'; h.innerText = '💕';
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.fontSize = Math.random() * 20 + 10 + 'px';
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 8000);
+    }, 500);
+
+    function nav(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        if(id === 's2') runStars();
+    }
+
+    // Stars Game Logic
+    let secret = "";
+    function runStars() {
+        const stars = ["⭐", "🌟", "✨", "💫", "🌠"];
+        let shuff = [...stars].sort(() => 0.5 - Math.random());
+        secret = shuff[0];
+        document.getElementById('star-display').innerText = shuff.join(" ");
+        setTimeout(() => {
+            document.getElementById('star-display').innerText = "???";
+            document.getElementById('star-inputs').style.display = 'block';
+            const box = document.getElementById('star-inputs'); box.innerHTML = "";
+            stars.forEach(s => {
+                let b = document.createElement('button'); b.innerText = s;
+                b.style.margin = "5px"; b.onclick = () => (s === secret ? nav('s3') : alert("Focus! Try again."));
+                box.appendChild(b);
+            });
+        }, 2000);
+    }
+
+    // Heart Game Logic
+    let score = 0;
+    function catchIt() {
+        score++; document.getElementById('score-text').innerText = `Progress: ${score} / 5`;
+        if(score >= 5) nav('s4');
+        else {
+            const h = document.getElementById('heart-target');
+            h.style.top = Math.random() * 130 + 'px';
+            h.style.left = Math.random() * 210 + 'px';
+        }
+    }
+
+    // Purge Logic
+    function startPurge() {
+        const v = document.getElementById('p-input').value; if(!v) return;
+        nav('s5'); const term = document.getElementById('term-box');
+        const list = v.split(','); let i = 0;
+        function log() {
+            if(i < list.length) {
+                term.innerHTML += `> LOCALIZING: ${list[i].trim()}...<br>`;
+                setTimeout(() => { term.innerHTML += `> DELETED FROM CORE. ✅<br><br>`; i++; log(); }, 800);
+            } else { setTimeout(() => nav('s6'), 1000); }
+        }
+        log();
+    }
+
+    // Board Typing & Ending Logic
+    function revealBoard() {
+        document.getElementById('open-btn').style.display = 'none';
+        const board = document.getElementById('final-board');
+        board.style.display = 'block';
+        
+        const content = "Kya kahu tere baare mai.. ✨\nTujhe sochke dil khus hota hai... ❤️\nHar pal tere sath acha lagta hai... 🤝\nChahat hu tujhse milna... 👣\nPar ye duriyo ko kaha chain aata hai.. ⏳\n\nYe masum se chhere pe udasi na laaya kr 🥺\n\nKyuki...\nJamane se dukh toh bhot milege 🌎\nPar phool sab kuch seh ke hi khilege... 🌹✨\n\n------------------\n\nDear Alshifa,\n\nThe universe built this moment just for you. Every hard night is just making you stronger. Please don't let clouds hide your smile.\n\nYou are precious, and I'm always right here by your side. 💕";
+        
+        const target = document.getElementById('type-writer');
+        let char = 0;
+        function type() {
+            if(char < content.length) {
+                target.innerHTML += content.charAt(char); char++;
+                board.scrollTop = board.scrollHeight; 
+                setTimeout(type, 40);
+            } else {
+                setTimeout(() => {
+                    document.getElementById('closing-promise').style.display = 'block';
+                    board.scrollTop = board.scrollHeight;
+                }, 1000);
+            }
+        }
+        type();
+    }
+
+    document.getElementById('heart-target').style.top = '70px';
+    document.getElementById('heart-target').style.left = '100px';
+</script>
+</body>
+</html>
